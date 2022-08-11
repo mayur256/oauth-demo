@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Implicit Grant Example</title>
+	<style>
+		.grid-container {
+			display: grid;
+			grid-template-columns: 20% 30%;
+			grid-template-rows: 2fr 2fr 4fr;
+		}
+	</style>
+</head>
+<body>
+	<script src="https://accounts.google.com/gsi/client" async defer></script>
+	<div
+		id="g_id_onload"
+		data-client_id="547862050233-04n33kr8d95mj2u75afhnp0efh9ai955.apps.googleusercontent.com"
+		data-callback="handleCredentialResponse"
+	>
+	</div>
+
+	<!-- Google Signin Prompt button -->
+	<div
+		class="g_id_signin"
+		data-type="standard"
+	></div>
+	<hr />
+
+	<div class="grid-container">
+		<div class="grid-item">Name</div>
+		<div class="grid-item"></div>
+
+		<div class="grid-item">Email</div>
+		<div class="grid-item"></div>
+
+		<div class="grid-item">Profile Pic</div>
+		<div class="grid-item"></div>
+	</div>
+	<noscript>Sorry! Your browser has disabled Javascript</noscript>
+
+	<script type="text/javascript">
+		function handleCredentialResponse(authenticationResponse) {
+			const decodedData = decodeJwt(authenticationResponse.credential);
+			console.log(decodedData);
+		}
+
+		/**
+		 * Decodes JWT and returns decoded payload
+		*/
+		function decodeJwt(token) {
+			const [ , base64Url, ] = token.split('.');
+			const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+			const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+			}).join(''));
+
+			return JSON.parse(jsonPayload);
+		};
+	</script>
+</body>
+</html>
