@@ -6,7 +6,7 @@
 	<title>Implicit Grant Example</title>
 	<style>
 		.grid-container {
-			display: grid;
+			display: none;
 			grid-template-columns: 20% 30%;
 			grid-template-rows: 2fr 2fr 4fr;
 		}
@@ -26,24 +26,35 @@
 		class="g_id_signin"
 		data-type="standard"
 	></div>
+
+	<span>Please sign in to view your data</span>
 	<hr />
 
 	<div class="grid-container">
 		<div class="grid-item">Name</div>
-		<div class="grid-item"></div>
+		<div class="grid-item" id="user-name"></div>
 
 		<div class="grid-item">Email</div>
-		<div class="grid-item"></div>
+		<div class="grid-item" id="user-email"></div>
 
 		<div class="grid-item">Profile Pic</div>
-		<div class="grid-item"></div>
+		<div class="grid-item" id="user-pic"></div>
 	</div>
 	<noscript>Sorry! Your browser has disabled Javascript</noscript>
 
 	<script type="text/javascript">
 		function handleCredentialResponse(authenticationResponse) {
 			const decodedData = decodeJwt(authenticationResponse.credential);
-			console.log(decodedData);
+			const { email, name, picture } = decodedData;
+
+			// Change display of data container
+			document.querySelector(".grid-container").style.display = "grid";
+			// User data elements
+			document.querySelector('#user-name').innerHTML = name;
+			document.querySelector('#user-email').innerHTML = email;
+			document.querySelector('#user-pic').innerHTML = `
+			<img src="${picture}" height="100" width="150" />
+			`;
 		}
 
 		/**
