@@ -6,7 +6,7 @@
 3. Run `composer install` in the demo root
 4. Create a private key with command `openssl genrsa -out private.key 2048`
 5. Change the private key permissions with `chmod 660 private.key`
-6. Create a public key with `openssl rsa -in private.key -pubout public.key`
+6. Create a public key with `openssl rsa -in private.key -pubout -out public.key`
 7. `cd` into the **public** directory
 8. Start the PHP server with command `php -S localhost:4444`
 
