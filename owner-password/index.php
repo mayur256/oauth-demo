@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 class App {
     /** Route constants */
     const HOME = '/';
-    const OWNER_PASS = "password";
+    const AUTH_SERVER = "auth_server";
 
     /**
      * @var routeUri
@@ -21,11 +21,12 @@ class App {
         switch($this->routeUri) {
             case self::HOME:
             case '':
-                echo "Hello World!";
+                echo "Welcome to OAuth2 Server!";
                 break;
 
-            case self::OWNER_PASS:
-                require __DIR__ . "/password.php";
+            case self::AUTH_SERVER:
+                $relativePath = self::AUTH_SERVER . ".php";
+                require __DIR__ . "/{$relativePath}";
                 break;
             
             default:
